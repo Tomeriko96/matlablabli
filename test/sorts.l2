@@ -1,0 +1,8 @@
+LEVEL;{low, normal, high}
+TIME;{short, long}
+
+SENSOR;         {<heart_rate>, <emg>, <acceleration>, <jump_height>}
+INFO_ELEM;      {<BOS>, <Mtemp>, <heart_rate>, <power>, <ems>, <aud>, <warmup>}
+STATE;          {desirable, undesirable}
+
+ACTION;         {<ems>, <aud>, <warmup>}
