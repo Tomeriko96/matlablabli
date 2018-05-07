@@ -1,0 +1,16 @@
+default (
+    task_load{arnie, high};      [1];    
+    deadline{arnie, soon};       [1];    
+)
+
+analysis (
+    observation{a, blood_pressure{arnie, high}};        [1];    
+    observation{a, blood_pressure{bernie, low}};        [1];    
+    desire{a, stress_level{arnie, high}, false};        [1:Inf]; 
+    desire{a, stress_level{bernie, high}, false};        [1:Inf]; 
+)
+
+support (
+    desire{a, stress_level{arnie, low}, true};          [1:Inf]; 
+    assume{a, ask_help{arnie, bernie}};                 [1:Inf]; 
+)

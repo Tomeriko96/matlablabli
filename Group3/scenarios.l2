@@ -1,0 +1,24 @@
+default (
+    acceleration{20};[1:Inf]
+    jump_height{30};[1:Inf]
+    heart_rate{90};[1:Inf]
+    emg{250};[1:Inf]
+)
+
+analysis (
+    observation{heart_rate{90}};[1:Inf];
+    belief{power{high}};[1:Inf];
+    desire{power{high}};[1:Inf];
+    desire{muscle_temperature{37.5}};[1:Inf];
+    desire{jump_height{40}};[1:Inf];
+    belief{jump_height{40}};[1:Inf]
+)
+
+support (
+    desire{ems{false}};[1:Inf];
+    assume{ems{false}};[1:Inf];
+    desire{aud{false}};[1:Inf];
+    assume{aud{false}};[1:Inf];
+    desire{warmup{false}};[1:Inf];
+    assume{warmup{false}};[1:Inf];
+)

@@ -1,0 +1,22 @@
+power;                      POWER
+heart_rate;                 REAL
+blood_oxygen_saturation;    REAL
+muscle_temperature;         REAL
+acceleration;               REAL
+jump_height;                REAL
+work;                       REAL
+rest;                       REAL
+mass;                       REAL
+force;                      REAL
+velocity;                   REAL
+time_of_landing;            REAL
+time_of_take_off;           REAL
+time_of_flight;             REAL
+emg;                        REAL
+sum_of_power;               REAL
+%--------------------------------------------------------------------------
+observation;                    {OBSERVATION}
+belief;                         {BELIEF}   
+desire;                         {DESIRE}
+assessment;                     {ASSESSMENT}
+%--------------------------------------------------------------------------

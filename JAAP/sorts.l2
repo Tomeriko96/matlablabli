@@ -1,0 +1,9 @@
+POWER;      {low, insufficient, sufficient, submaximal, maximal, supramaximal}
+LEVEL;      {low,high}
+
+%--------------------------------------------------------------------------
+
+OBSERVATION;    {<heart_rate>,<power>}
+BELIEF;         {<heart_rate>,<power>,<force>}
+DESIRE;         {<power>}
+ASSESSMENT;     {<power>}

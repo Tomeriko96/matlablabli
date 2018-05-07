@@ -1,0 +1,11 @@
+mass{80};[1:Inf]
+acceleration{20};[1:Inf]
+jump_height{30};[1:Inf]
+heart_rate{90};[1:Inf]
+emg{250};[1:Inf]
+%--------------------------------------------------------------------------
+desire{power{maximal}};   [1:Inf]
+assessment{power{maximal}};   [1:Inf]
+belief{power{maximal}};   [1:Inf]
+belief{force{200}};   [1:Inf]
+observation{heart_rate{90}};[1:Inf]

@@ -1,0 +1,5 @@
+LEVEL;{low, high}
+SENSOR;{<emg>, <jump_height>, <acceleration>, <heart_rate>}
+INFO_ELEM;{<power>, <heart_rate>, <blood_oxygen_saturation>, <muscle_temperature>, <acceleration>, <jump_height>, <ems>, <work>, <rest>, <force>, <velocity>, <time_of_flight>, <emg>, <ems>, <aud>, <warmup>}
+STATE;{desirable, undesirable}
+ACTION;{<ems>, <aud>, <warmup>}

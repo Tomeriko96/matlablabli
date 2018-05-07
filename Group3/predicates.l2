@@ -1,0 +1,26 @@
+power;LEVEL
+heart_rate;REAL
+blood_oxygen_saturation;REAL
+muscle_temperature;REAL
+acceleration;REAL
+jump_height;REAL
+work;REAL
+rest;REAL
+force;REAL
+velocity;REAL
+time_of_flight;REAL
+emg;REAL
+sum_of_power;REAL
+ems;BOOLEAN
+aud;BOOLEAN
+warmup;BOOLEAN
+
+
+observation;{SENSOR}
+belief;{INFO_ELEM}
+desire;{INFO_ELEM}
+assessment;{INFO_ELEM, STATE}
+
+assume;{ACTION}
+assumption;{ACTION, INFO_ELEM}
+propose;{ACTION}

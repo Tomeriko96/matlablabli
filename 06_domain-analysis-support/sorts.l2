@@ -1,0 +1,10 @@
+AGENT;          {arnie, bernie, charlie}
+LEVEL;          {low, medium, high}
+T_LEVEL;        {soon, late}
+
+AMBIENT_AGENT;  {a, b, c}
+SENSOR;         {<task_load>, <deadline>, <blood_pressure>}
+INFO_ELEM;      {<work_pressure>, <stress_level>, <performance>, <task_load>, <deadline>, <blood_pressure>, <ask_help>}
+STATE;          {desirable, undesirable}
+
+ACTION;         {<ask_help>}

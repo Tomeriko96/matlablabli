@@ -1,0 +1,16 @@
+task_load;      {AGENT, LEVEL}
+deadline;       {AGENT, T_LEVEL}
+work_pressure;  {AGENT, LEVEL}
+stress_level;   {AGENT, LEVEL}
+performance;    {AGENT, LEVEL}
+blood_pressure; {AGENT, LEVEL}
+
+observation;    {AMBIENT_AGENT, SENSOR}
+belief;         {AMBIENT_AGENT, INFO_ELEM}
+desire;         {AMBIENT_AGENT, INFO_ELEM, BOOLEAN}
+assessment;     {AMBIENT_AGENT, INFO_ELEM, STATE}
+
+ask_help;       {AGENT, AGENT}
+assume;         {AMBIENT_AGENT, ACTION}    
+assumption;     {AMBIENT_AGENT, ACTION, INFO_ELEM}
+propose;        {AMBIENT_AGENT, ACTION}

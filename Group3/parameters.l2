@@ -1,0 +1,11 @@
+default (
+g;                      9.81
+mass;                   80
+heart_rate;             100
+maximal_Work;           1600000
+minimal_Work;           1100000
+BOS;                    100
+muscle_temp;            37.9
+flight_time;            10
+power_range_1;          1500
+)
