@@ -1,6 +1,6 @@
 clear all
 close all
-%test%
+
 disp('Running the domain/analysis/support model...')
 
 clear all
