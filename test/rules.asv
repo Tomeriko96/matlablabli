@@ -1,0 +1,374 @@
+function [ fncs ] = rules()
+    % DO NOT EDIT
+    fncs = l2.getRules();
+    for i=1:length(fncs)
+       fncs{i} = str2func(fncs{i});
+    end
+end
+%ADD RULES BELOW
+
+%% Domain model
+function result = ddr1( trace, params, t)
+    % from heart rate to blood-oxygen saturation
+    result = {};
+    Blood_saturation = 'normal';
+    for heart_rate = l2.getall(trace, t, 'heart_rate', {NaN})
+        heart = heart_rate.arg{1};
+        if  heart < params.heart_rate
+            Blood_saturation = 'low';
+        elseif heart > params.heart_rate
+            Blood_saturation = 'high';
+        else
+            Blood_saturation = 'normal';
+        end
+        result = { result{:} {t+1, 'BOS', {Blood_saturation}} };
+    end
+end
+
+function result = ddr2( trace, params, t)
+    % from blood-oxygen saturation to muscle temperature
+    result = {};
+    if l2.exists(trace, t, 'BOS{low}')
+        result = {t+1, 'Mtemp{low}'};
+    elseif l2.exists(trace, t, 'BOS{high}')
+        result = {t+1, 'Mtemp{high}'};
+    else
+        result = {t+1, 'Mtemp{normal}'};
+    end
+end
+
+function result = ddr3( trace, params, t)
+    % From acceleration and mass to force
+    result = {};
+    force = 0;
+    for acceleration = l2.getall(trace, t, 'acceleration', {NaN})
+        a = acceleration.arg{1};
+        M = params.mass;
+        force = M * a;
+    end
+
+    result = {t+1, predicate('force', force)};
+end
+
+function result = ddr4( trace, params, t)
+    % from jump height and force to work
+    result = {};
+    Work = 0;
+    for force = l2.getall(trace, t, 'force', {NaN})
+        F = force.arg{1};
+        for jump_height = l2.getall(trace, t, 'force', {NaN})
+            d = jump_height.arg{1};
+        end
+        Work = F * d;
+    end
+    result = {t+1, predicate('work', Work)};
+end
+
+function result = ddr5( trace, params, t)
+    % from work to rest interval
+    result = {};
+    for work = l2.getall(trace, t, 'work', {NaN})
+        if work > 10000
+            result = {t+1, 'rest{long}'};
+        elseif work < 10000
+            result = {t+1, 'rest{short}'};
+        end
+    end
+end
+
+function result = ddr6( trace, params, t)
+    % from flight time to vertical velocity
+    result = {};
+    velocity = (params.g * t)/2;
+    result = { result{:} {t+1, 'velocity', {velocity}} };
+end
+
+function result = ddr7( trace, params, t)
+    % From force, vertical velocity, muscle temperature, and emg to power
+    result = {};
+    power = 'low';
+    for force = l2.getall(trace, t, 'force', {NaN})
+        F = force.arg{1};
+        for velocity = l2.getall(trace, t, 'velocity', {NaN})
+            v = velocity.arg{1};
+            for Mtemp = l2.getall(trace, t, 'Mtemp', {NaN})
+                Temp = Mtemp.arg{1};
+                for emgmeasure = l2.getall(trace, t, 'emg', {NaN})
+                    emg = emgmeasure.arg{1};
+                    sum = (F * v * Temp * emg)/10000;
+                    if sum < 20000
+                        power = 'low';
+                    else
+                        power = 'high';
+                    end
+                end
+            end
+
+        end
+
+    end
+    result = { result{:} {t+1, 'power', {power}} };
+end
+
+%% Analysis model
+
+%%ADR1 Observation of Power
+function result = adr1( trace, params, t)
+result = {};
+
+for power = l2.getall(trace, t, 'power', {NaN})
+    pow = power.arg{1};
+    
+    result = {result{:} {t+1, 'observation', predicate('power', pow)}};
+end
+end
+
+%%ADR2 Belief of Power
+function result = adr2( trace, params, t)
+result = {};
+
+for observation = l2.getall(trace, t, 'observation', {predicate('power', {NaN})})
+    belief = observation.arg{1};
+    
+    result = {result{:} {t+1, 'belief', belief}};
+end
+end
+
+%%ADR3 Belief of Muscle Temperature
+function result = adr3( trace, params, t)
+result = {};
+
+for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
+    belief = power_belief.arg{1};
+    for mtemp = l2.getall(trace, t, 'mtemp', {NaN})
+        temp = mtemp.arg{1};
+        
+        if belief == 'low'
+            temp = 'low'
+            
+            result = {result{:} {t+1, 'belief', {predicate('mtemp', temp)}}};
+        end
+    end
+end
+end
+
+%%ADR4 Belief of EMG
+
+%%ADR5 Belief of Force
+function result = adr5( trace, params, t)
+result = {};
+
+for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
+    belief = power_belief.arg{1};
+    for force = l2.getall(trace, t, 'force', {NaN})
+        forc = force.arg{1};
+        
+        result = {result{:} {t+1, 'belief', {predicate('force', forc)}}};
+    end
+end
+end
+
+%%ADR6 Belief of Work
+function result = adr6(trace, params, t)
+result = {};
+
+for force_belief = l2.getall(trace, t, 'belief', {predicate('force', {NaN})})
+    belief = force_belief.arg{1};
+    
+    for work = l2.getall(trace, t, 'work', {NaN})
+        working = work.arg{1};
+        
+        result = {result{:} {t+1, 'belief', {predicate('work', working)}}};
+    end
+end
+end
+
+%%ADR7 Belief on Jump Height
+function result = adr7(trace, params, t)
+result = {};
+
+for work_belief = l2.getall(trace, t, 'belief', {predicate('work', {NaN})})
+    belief = work_belief.arg{1};
+    
+    for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
+        height = jump_height.arg{1};
+        
+        result = {result{:} {t+1, 'belief', {predicate('jump_height', height)}}};
+    end
+end
+end
+
+%%ADR8 Assessment on Muscle Temperature
+function result = adr8(trace, params, t)
+result = {};
+
+for jump_height_belief = l2.getall(trace, t, 'belief', {predicate('jump_height', {NaN})})
+    
+
+%%ADR9 Assessment on Jump Height
+
+%%ADR10 Assessment on Muscle Activity
+
+
+%ADR7 Belief Asthma Attack
+function result = adr7(trace,params,t)
+result = {};
+
+for heart_belief = l2.getall(trace,t,'belief', predicate('heart_rate', NaN))
+    heart = heart_belief.arg{1}.arg{1};
+    for cough_belief = l2.getall(trace,t,'belief', predicate('coughing', NaN))
+        cough = cough_belief.arg{1}.arg{1};
+        for chest_belief = l2.getall(trace,t,'belief', predicate('chest_tightness', NaN))
+            chest = chest_belief.arg{1}.arg{1};
+            
+            asthma_attack = false;
+            
+            if cough
+                if chest
+                    if heart == params.high_heart_rate
+                        asthma_attack = true;
+                    else
+                        asthma_attack = false;
+                    end
+                else
+                    asthma_attack = false;
+                end
+            else
+                asthma_attack = false;
+            end
+            
+            result = {result{:} {t+1, 'belief', predicate('asthma_attack', asthma_attack)}};
+    end
+end
+end
+end
+
+%ADR8 Belief Narrowing of Bronchus
+function result = adr8(trace,params,t)
+result = {};
+for asthma_belief = l2.getall(trace,t,'belief', predicate('asthma_attack', NaN))
+    asthma = asthma_belief.arg{1}.arg{1};
+    
+    bronchus = 0;
+    
+    if asthma
+        bronchus = params.bronchus_narrowed;
+    else
+        bronchus = params.bronchus_not_narrowed;
+    end
+    result = {result{:} {t+1, 'belief', predicate('narrowing_of_bronchus', bronchus)}};
+end
+end
+
+%ADR9 Assessment of Narrowing of Bronchus
+function result = adr9(trace,params,t)
+result = {};
+
+for bronchus_belief = l2.getall(trace,t,'belief', predicate('narrowing_of_bronchus', NaN))
+    bronchus = bronchus_belief.arg{1}.arg{1};
+    
+    for bronchus_desire = l2.getall(trace,t,'desire', predicate('narrowing_of_bronchus', NaN))
+        desire = bronchus_desire.arg{1}.arg{1};
+        
+        assessment = 0;
+        
+        if bronchus == desire
+            assessment = predicate('narrowing_of_bronchus', params.bronchus_not_narrowed);
+        else
+            assessment = predicate('narrowing_of_bronchus', params.bronchus_narrowed);
+        end
+        
+        result = {result{:} {t+1, 'assessment', assessment}};
+    end
+end
+end
+
+%SDR1 Assumption of sending a message
+function result = sdr1(trace,params,t)
+result = {};
+for bronchus_assessment = l2.getall(trace,t,'belief', predicate('narrowing_of_bronchus', NaN))
+    bronchus = bronchus_assessment.arg{1}.arg{1};
+    
+    assumed = 0;
+    
+    if bronchus == params.bronchus_narrowed
+        assumed = predicate('message', true);
+    else
+        assumed = predicate('message',false);
+    end
+    
+    result = {result{:} {t+1, 'assumed', assumed}};
+end
+end
+
+%SDR2 Belief of Exercise Intensity
+function result = sdr2(trace,params,t)
+result = {};
+for message_assumed = l2.getall(trace,t,'assumed', predicate('message', NaN))
+    message = message_assumed.arg{1}.arg{1};
+
+        belief = 0;
+        
+        if message
+            belief = predicate('exercise_intensity', 'low');
+        else
+            belief = predicate('exercise_intensity', 'high');
+        end
+        
+        result = {result{:} {t+1, 'support_belief', belief}};
+    end
+end
+
+
+
+%SDR3 Belief of Narrowing of Bronchus
+function result = sdr3(trace,params,t)
+result = {};
+for intensity_belief = l2.getall(trace,t,'support_belief', predicate('exercise_intensity', NaN))
+    belief = intensity_belief.arg{1}.arg{1};
+    
+    new_belief = 0;
+    
+    if strcmp(belief, 'low')
+        new_belief = predicate('narrowing_of_bronchus', params.bronchus_not_narrowed);
+    else
+        new_belief = predicate('narrowing_of_bronchus', params.bronchus_narrowed);
+    end
+    
+    result = {result{:} {t+1, 'support_belief', new_belief}};
+end
+end
+
+%SDR4 Proposal of sending a message to the user
+function result = sdr4(trace,params,t)
+result = {};
+for bronchus_belief = l2.getall(trace,t,'support_belief', predicate('narrowing_of_bronchus', NaN))
+    belief = bronchus_belief.arg{1}.arg{1};
+    
+    for bronchus_desire = l2.getall(trace,t,'desire', predicate('narrowing_of_bronchus', NaN))
+        desire = bronchus_desire.arg{1}.arg{1};
+        
+        for bronchus_assumed = l2.getall(trace, t, 'assumed', predicate('message', true))
+            assumed = bronchus_assumed.arg{1}.arg{1};
+            
+            propose = 0;
+            
+            if assumed == true
+                if desire == params.bronchus_not_narrowed
+                    if belief == params.bronchus_not_narrowed
+                        propose = predicate('message', true);
+                    else
+                        propose = predicate('message', false);
+                    end
+                else
+                    propose = predicate('message', false);
+                end
+            else
+                propose = predicate('message', false);
+            end
+            
+            result = {result{:} {t+1, predicate('proposed', propose)}};
+        end
+    end
+end
+

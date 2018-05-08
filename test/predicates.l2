@@ -1,6 +1,6 @@
 heart_rate;REAL
 BOS;LEVEL
-Mtemp;LEVEL
+mtemp;LEVEL
 acceleration;REAL
 jump_height;REAL
 work;REAL
@@ -16,7 +16,7 @@ warmup;BOOLEAN
 observation;    {SENSOR}
 belief;         {INFO_ELEM}
 desire;         {INFO_ELEM}
-assessment;     {INFO_ELEM, STATE}
+assessment;     {INFO_ELEM}
 
 assume;         {ACTION}    
 assumption;     {ACTION, INFO_ELEM}

@@ -1,8 +1,8 @@
-LEVEL;{low, normal, high}
+LEVEL;{low, normal, high, supramaximal}
 TIME;{short, long}
 
-SENSOR;         {<heart_rate>, <emg>, <acceleration>, <jump_height>}
-INFO_ELEM;      {<BOS>, <Mtemp>, <heart_rate>, <power>, <ems>, <aud>, <warmup>}
+SENSOR;         {<heart_rate>, <emg>, <acceleration>, <jump_height>, <power>}
+INFO_ELEM;      {<BOS>, <mtemp>, <heart_rate>, <power>, <emg>, <work>, <jump_height>, <force>, <ems>, <aud>, <warmup>}
 STATE;          {desirable, undesirable}
 
 ACTION;         {<ems>, <aud>, <warmup>}

@@ -6,11 +6,14 @@ heart_rate{150};[5:7]
 heart_rate{60};[8:Inf]
 jump_height{60};[1:Inf]
 emg{50};[1:Inf]
+desire{mtemp{low}};[1:Inf];
+desire{jump_height{60}};[1:Inf];
+desire{emg{50}};[1:Inf];
 )
 
 analysis (
     observation{heart_rate{80}};        [1:Inf];    
-    desire{Mtemp{normal}};        [1:Inf]; 
+    desire{mtemp{normal}};        [1:Inf]; 
 )
 support (
     desire{ems{false}};[1:Inf];
