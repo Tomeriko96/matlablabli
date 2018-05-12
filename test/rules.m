@@ -144,7 +144,7 @@ for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
         temp = mtemp.arg{1};
         
         if belief == 'low'
-            temp = 'low'
+            temp = 'low';
             
             result = {result{:} {t+1, 'belief', {predicate('mtemp', temp)}}};
         end
@@ -161,7 +161,7 @@ for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
     for emg_level = l2.getall(trace, t, 'emg', {NaN})
         emg = emg_level.arg{1};
         
-        result = {result{:} {t+1, 'belief', {predicate('emg', emg)}}}
+        result = {result{:} {t+1, 'belief', {predicate('emg', emg)}}};
     end
 end
 end
@@ -219,7 +219,7 @@ for muscle_temperature_belief = l2.getall(trace, t, 'belief', {predicate('mtemp'
     for muscle_temperature_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {NaN})})
         desire = muscle_temperature_desire.arg{1}.arg{1};
         
-        result = {result{:} {t+1, 'assessment', {predicate('mtemp', belief)}}}
+        result = {result{:} {t+1, 'assessment', {predicate('mtemp', belief)}}};
     end
 end
 end
@@ -228,14 +228,14 @@ end
 function result = adr9(trace, params, t)
 result = {};
 
-for jump_height_belief = l2.getall(trace, t, 'belief', {predicate('jump_height', {NaN})})
-    belief = jump_height_belief.arg{1}.arg{1};
-    for jump_height_desire = l2.getall(trace, t, 'desire', {predicate('jump_height', {NaN})})
-        desire = jump_height_desire.arg{1}.arg{1};
-        
-        result = {result{:} {t+1, 'assessment', {predicate('jump_height', belief)}}}
+    for jump_height_belief = l2.getall(trace, t, 'belief', {predicate('jump_height', {NaN})})
+        belief = jump_height_belief.arg{1}.arg{1};
+        for jump_height_desire = l2.getall(trace, t, 'desire', {predicate('jump_height', {NaN})})
+            desire = jump_height_desire.arg{1}.arg{1};
+
+            result = {result{:} {t+1, 'assessment', {predicate('jump_height', belief)}}};
+        end
     end
-end
 end
 
 %%ADR10 Assessment on Muscle Activity
@@ -247,7 +247,7 @@ for muscle_activity_belief = l2.getall(trace, t, 'belief', {predicate('emg', {Na
     for muscle_activity_desire = l2.getall(trace, t, 'desire', {predicate('emg', {NaN})})
         desire = muscle_activity_desire.arg{1}.arg{1};
         
-        result = {result{:} {t+1, 'assessment', {predicate('emg', belief)}}}
+        result = {result{:} {t+1, 'assessment', {predicate('emg', belief)}}};
     end
 end
 end
