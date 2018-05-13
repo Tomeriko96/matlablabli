@@ -9,6 +9,7 @@ emg{50};[1:Inf]
 desire{mtemp{low}};[1:Inf];
 desire{jump_height{60}};[1:Inf];
 desire{emg{50}};[1:Inf];
+desire{power{high}};[1:Inf];
 )
 
 analysis (

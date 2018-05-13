@@ -388,7 +388,7 @@ function result = sdr6(trace, params, t)
 result = {};
 for work_desire = l2.getall(trace, t, 'desire', {predicate('work', {NaN})})
     work = work_desire.arg{1}.arg{1};
-    for force_desire = l2.getall(trace, t, ' desire', {predicate('force', {NaN})})
+    for force_desire = l2.getall(trace, t, 'desire', {predicate('force', {NaN})})
         force = force_desire.arg{1}.arg{1};
         desired_distance = work / force;
         result = {result{:} {t+1, 'desire', {predicate('jump_height', desired_distance)}}};
@@ -446,7 +446,7 @@ for emg_desire = l2.getall(trace,t,'desire', {predicate('emg', {NaN})})
     emg = emg_desire.arg{1}.arg{1};
     for jump_height_desire = l2.getall(trace,t,'desire', {predicate('jump_height', {NaN})})
         height = jump_height_desire.arg{1}.arg{1};
-        if emg && height
+        if emg == params.emg && height
             result = {result{:} {t+1, 'desire', {predicate('aud', true)}}}
         else
             result = {result{:} {t+1, 'desire', {predicate('aud', false)}}}
