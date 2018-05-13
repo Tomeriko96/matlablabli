@@ -338,9 +338,9 @@ result = {};
 for mtemp_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {NaN})})
     temp = mtemp_desire.arg{1}.arg{1};
     if temp == 'high'
-        result = {result{:} {t+1, 'desire', {predicate('warmup', true)}}}
+        result = {result{:} {t+1, 'desire', {predicate('warmup', true)}}};
     else
-        result = {result{:} {t+1, 'desire', {predicate('warmup', false)}}}
+        result = {result{:} {t+1, 'desire', {predicate('warmup', false)}}};
     end
 end
 end
