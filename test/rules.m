@@ -373,7 +373,7 @@ end
 function result = sdr5(trace, params, t)
 result = {};
 for force_desire = l2.getall(trace, t, 'desire', {predicate('force', {NaN})})
-    desire = force_desire.arg{1}.arg{1};
+    desire = force_desire.arg{1}.arg{1}
     for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
         height = jump_height.arg{1};
         desired_work = desire * height;
@@ -404,9 +404,9 @@ for power_desire = l2.getall(trace,t,'desire', {predicate('power', {NaN})})
     if power == 'high'
         desire = params.emg;
     else
-        ;
+        power = 'low';
     end
-    result = {result{:} {t+1, 'desire', {predicate('emg', desire')}}}
+    result = {result{:} {t+1, 'desire', {predicate('emg', desire')}}};
 end
 end
     
@@ -419,9 +419,9 @@ for emg_desire = l2.getall(trace, t, 'desire', {predicate('emg', {NaN})})
     if emg == params.emg
         ems = true;
     else
-        ;
+        ems = false;
     end
-    result = {result{:} {t+1, 'desire', {predicate('ems', ems)}}}
+    result = {result{:} {t+1, 'desire', {predicate('ems', ems)}}};
 end
 end
 
@@ -432,9 +432,9 @@ result = {};
 for ems_desire = l2.getall(trace, t, 'desire', {predicate('ems', {NaN})})
     ems = ems_desire.arg{1}.arg{1};
     if ems == true
-        result = {result{:} {t+1, 'propose', {predicate('ems', true)}}}
+        result = {result{:} {t+1, 'propose', {predicate('ems', true)}}};
     else
-        result = {result{:} {t+1, 'propose', {predicate('ems', false)}}}
+        result = {result{:} {t+1, 'propose', {predicate('ems', false)}}};
     end
 end
 end
@@ -447,9 +447,9 @@ for emg_desire = l2.getall(trace,t,'desire', {predicate('emg', {NaN})})
     for jump_height_desire = l2.getall(trace,t,'desire', {predicate('jump_height', {NaN})})
         height = jump_height_desire.arg{1}.arg{1};
         if emg == params.emg && height
-            result = {result{:} {t+1, 'desire', {predicate('aud', true)}}}
+            result = {result{:} {t+1, 'desire', {predicate('aud', true)}}};
         else
-            result = {result{:} {t+1, 'desire', {predicate('aud', false)}}}
+            result = {result{:} {t+1, 'desire', {predicate('aud', false)}}};
         end
     end
 end
@@ -461,9 +461,9 @@ result = {};
 for aud_desire = l2.getall(trace,t,'desire', {predicate('aud', {NaN})})
     aud = aud_desire.arg{1}.arg{1};
     if aud == true
-        result = {result{:} {t+1, 'propose', {predicate('aud', true)}}}
+        result = {result{:} {t+1, 'propose', {predicate('aud', true)}}};
     else
-        result = {result{:} {t+1, 'propose', {predicate('aud', false)}}}
+        result = {result{:} {t+1, 'propose', {predicate('aud', false)}}};
     end
 end
 end
