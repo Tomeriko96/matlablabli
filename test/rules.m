@@ -128,7 +128,7 @@ function result = adr2( trace, params, t)
 result = {};
 
 for heart_rate = l2.getall(trace, t, 'heart_rate', {NaN})
-    heart = power.arg{1};
+    heart = heart_rate.arg{1};
     
     result = {result{:} {t+1, 'observation', predicate('heart_rate', heart)}};
 end
@@ -161,7 +161,7 @@ function result = adr5( trace, params, t)
 result = {};
 
 for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
-    height = power.arg{1};
+    height = jump_height.arg{1};
     
     result = {result{:} {t+1, 'observation', predicate('jump_height', height)}};
 end
