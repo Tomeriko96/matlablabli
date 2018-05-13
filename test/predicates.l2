@@ -16,7 +16,7 @@ warmup;BOOLEAN
 observation;    {SENSOR}
 belief;         {INFO_ELEM}
 desire;         {INFO_ELEM}
-assessment;     {INFO_ELEM, STATE}
+assessment;     {STATE}
 
 assume;         {ACTION}    
 assumption;     {ACTION, INFO_ELEM}
