@@ -5,7 +5,7 @@ disp('Running the domain/analysis/support model...')
 
 model = l2('test');
 model.simulate(10);
-model.plot();
+% model.plot();
 % set(gcf,'name','Domain model','numbertitle','off')
 % model.simulate(10, 'analysis');
 % model.plot();
