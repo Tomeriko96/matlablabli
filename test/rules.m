@@ -397,10 +397,73 @@ end
 end
 
 %SDR7 From Power Desire -> Emg Desire
-
-%SDR8
-
-%SDR9
-
-%SDR10
+function result = sdr7(trace,params,t)
+result = {};
+for power_desire = l2.getall(trace,t,'desire', {predicate('power', {NaN})})
+    power = power_desire.arg{1}.arg{1};
+    if power == 'high'
+        desire = params.emg;
+    else
+        ;
+    end
+    result = {result{:} {t+1, 'desire', {predicate('emg', desire')}}}
+end
+end
     
+%SDR8 From Emg Desire -> EMS Desire
+function result = sdr8(trace,params,t)
+result = {};
+for emg_desire = l2.getall(trace, t, 'desire', {predicate('emg', {NaN})})
+    emg = emg_desire.arg{1}.arg{1};
+    ems = false;
+    if emg == params.emg
+        ems = true;
+    else
+        ;
+    end
+    result = {result{:} {t+1, 'desire', {predicate('ems', ems)}}}
+end
+end
+
+%SDR9 From EMS Desire -> EMS Proposal
+function result = sdr9(trace,params,t)
+result = {};
+
+for ems_desire = l2.getall(trace, t, 'desire', {predicate('ems', {NaN})})
+    ems = ems_desire.arg{1}.arg{1};
+    if ems == true
+        result = {result{:} {t+1, 'propose', {predicate('ems', true)}}}
+    else
+        result = {result{:} {t+1, 'propose', {predicate('ems', false)}}}
+    end
+end
+end
+    
+%SDR10 From EMG Desire & Jump Height Desire -> Audio Encouragement Desire
+function result = sdr10(trace,params,t)
+result = {};
+for emg_desire = l2.getall(trace,t,'desire', {predicate('emg', {NaN})})
+    emg = emg_desire.arg{1}.arg{1};
+    for jump_height_desire = l2.getall(trace,t,'desire', {predicate('jump_height', {NaN})})
+        height = jump_height_desire.arg{1}.arg{1};
+        if emg && height
+            result = {result{:} {t+1, 'desire', {predicate('aud', true)}}}
+        else
+            result = {result{:} {t+1, 'desire', {predicate('aud', false)}}}
+        end
+    end
+end
+end
+
+%SDR11 From Audio Encouragement Desire -> Audio Encouragement Proposal
+function result = sdr11(trace,params,t)
+result = {};
+for aud_desire = l2.getall(trace,t,'desire', {predicate('aud', {NaN})})
+    aud = aud_desire.arg{1}.arg{1};
+    if aud == true
+        result = {result{:} {t+1, 'propose', {predicate('aud', true)}}}
+    else
+        result = {result{:} {t+1, 'propose', {predicate('aud', false)}}}
+    end
+end
+end

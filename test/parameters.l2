@@ -3,5 +3,5 @@ heart_rate;100
 mass;80
 g;9.81
 low_jump_height;10
-
+emg;400
 )
