@@ -372,7 +372,7 @@ end
 
 %SDR5 From Force Desire -> Work Desire
 function result = sdr5(trace, params, t)
-result = {}:
+result = {};
 for force_desire = l2.getall(trace, t, 'desire', {predicate('force', {NaN})})
     desire = force_desire.arg{1}.arg{1};
     for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
