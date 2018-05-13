@@ -13,9 +13,12 @@ ems;BOOLEAN
 aud;BOOLEAN
 warmup;BOOLEAN
 
+deviation;      {SENSOR}
 observation;    {SENSOR}
 belief;         {INFO_ELEM}
-prediction;     {INFO_ELEM}
+prediction1;    {SENSOR}
+prediction2;    {SENSOR}
+sensitivity;    {SENSOR}
 desire;         {INFO_ELEM}
 assessment;     {STATE}
 

@@ -10,6 +10,14 @@ desire{mtemp{low}};[1:Inf];
 desire{jump_height{60}};[1:Inf];
 desire{emg{50}};[1:Inf];
 desire{power{high}};[1:Inf];
+prediction1{heart_rate{120}};[1:10]
+prediction2{heart_rate{125}};[1:10]
+prediction1{emg{210}};[1:10]
+prediction2{emg{250}};[1:10]
+prediction1{acceleration{8}};[1:10]
+prediction2{acceleration{10}};[1:10]
+prediction1{jump_height{50}};[1:10]
+prediction2{jump_height{60}};[1:10]
 )
 
 analysis (
