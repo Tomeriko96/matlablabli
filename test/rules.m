@@ -123,8 +123,52 @@ for power = l2.getall(trace, t, 'power', {NaN})
 end
 end
 
-%%ADR2 Belief of Power
+%%ADR2 Observation of Heart Rate
 function result = adr2( trace, params, t)
+result = {};
+
+for heart_rate = l2.getall(trace, t, 'heart_rate', {NaN})
+    heart = power.arg{1};
+    
+    result = {result{:} {t+1, 'observation', predicate('heart_rate', heart)}};
+end
+end
+
+%%ADR3 Observation of EMG
+function result = adr3( trace, params, t)
+result = {};
+
+for emg = l2.getall(trace, t, 'emg', {NaN})
+    value = emg.arg{1};
+    
+    result = {result{:} {t+1, 'observation', predicate('emg', value)}};
+end
+end
+
+%%ADR4 Observation of Acceleration
+function result = adr4( trace, params, t)
+result = {};
+
+for acceleration = l2.getall(trace, t, 'acceleration', {NaN})
+    value = acceleration.arg{1};
+    
+    result = {result{:} {t+1, 'observation', predicate('acceleration', value)}};
+end
+end
+
+%%ADR5 Observation of Jump Height
+function result = adr5( trace, params, t)
+result = {};
+
+for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
+    height = power.arg{1};
+    
+    result = {result{:} {t+1, 'observation', predicate('jump_height', height)}};
+end
+end
+
+%%ADR6 Belief of Power
+function result = adr6( trace, params, t)
 result = {};
 
 for observation = l2.getall(trace, t, 'observation', {predicate('power', {NaN})})
@@ -134,8 +178,8 @@ for observation = l2.getall(trace, t, 'observation', {predicate('power', {NaN})}
 end
 end
 
-%%ADR3 Belief of Muscle Temperature
-function result = adr3( trace, params, t)
+%%ADR7 Belief of Muscle Temperature
+function result = adr7( trace, params, t)
 result = {};
 
 for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
@@ -152,8 +196,8 @@ for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
 end
 end
 
-%%ADR4 Belief of EMG
-function result = adr4(trace, params, t)
+%%ADR8 Belief of EMG
+function result = adr8(trace, params, t)
 result = {};
 
 for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
@@ -166,8 +210,8 @@ for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
 end
 end
 
-%%ADR5 Belief of Force
-function result = adr5( trace, params, t)
+%%ADR9 Belief of Force
+function result = adr9( trace, params, t)
 result = {};
 
 for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
@@ -180,28 +224,23 @@ for power_belief = l2.getall(trace, t, 'belief', {predicate('power', {NaN})})
 end
 end
 
-%%ADR6 Belief of Work
-function result = adr6(trace, params, t)
+%%ADR10 Belief of Work
+function result = adr10(trace, params, t)
 result = {};
-
 for force_belief = l2.getall(trace, t, 'belief', {predicate('force', {NaN})})
-    belief = force_belief.arg{1};
-    
+    belief = force_belief.arg{1};  
     for work = l2.getall(trace, t, 'work', {NaN})
         working = work.arg{1};
-        
         result = {result{:} {t+1, 'belief', {predicate('work', working)}}};
     end
 end
 end
 
-%%ADR7 Belief on Jump Height
-function result = adr7(trace, params, t)
+%%ADR11 Belief on Jump Height
+function result = adr11(trace, params, t)
 result = {};
-
 for work_belief = l2.getall(trace, t, 'belief', {predicate('work', {NaN})})
     belief = work_belief.arg{1};
-    
     for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
         height = jump_height.arg{1};
         
@@ -210,61 +249,155 @@ for work_belief = l2.getall(trace, t, 'belief', {predicate('work', {NaN})})
 end
 end
 
-%%ADR8 Assessment on Muscle Temperature
-function result = adr8(trace, params, t)
+%%ADR12 Assessment on Muscle Temperature
+function result = adr12(trace, params, t)
 result = {};
 
-for muscle_temperature_belief = l2.getall(trace, t, 'belief', {predicate('mtemp', {NaN})})
+for muscle_temperature_belief = l2.getall(trace, t, 'belief', {predicate('mtemp', {'low'})})
     belief = muscle_temperature_belief.arg{1}.arg{1};
-    for muscle_temperature_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {NaN})})
+    for muscle_temperature_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {'low'})})
         desire = muscle_temperature_desire.arg{1}.arg{1};
+        assessment = 0;
         
-        result = {result{:} {t+1, 'assessment', {predicate('mtemp', belief)}}}
+        if belief == 'low' && desire == 'low'
+            assessment = 'undesirable'
+        else
+            assessment = 'desirable'
+        end
+        
+        result = {result{:} {t+1, 'assessment', assessment}}
     end
 end
 end
 
-%%ADR9 Assessment on Jump Height
-function result = adr9(trace, params, t)
+%%ADR13 Assessment on Jump Height
+function result = adr13(trace, params, t)
 result = {};
 
-for jump_height_belief = l2.getall(trace, t, 'belief', {predicate('jump_height', {NaN})})
+for jump_height_belief = l2.getall(trace, t, 'belief', {predicate('jump_height', {10})})
     belief = jump_height_belief.arg{1}.arg{1};
-    for jump_height_desire = l2.getall(trace, t, 'desire', {predicate('jump_height', {NaN})})
+    for jump_height_desire = l2.getall(trace, t, 'desire', {predicate('jump_height', {20})})
         desire = jump_height_desire.arg{1}.arg{1};
         
-        result = {result{:} {t+1, 'assessment', {predicate('jump_height', belief)}}}
+        assessment = 0;
+        
+        if belief <= desire
+            assessment = 'undesirable'
+        else
+            assessment = 'desirable'
+        end
+        result = {result{:} {t+1, 'assessment', assessment}}
     end
 end
 end
 
-%%ADR10 Assessment on Muscle Activity
-function result = adr10(trace, params, t)
+%%ADR14 Assessment on Muscle Activity
+function result = adr14(trace, params, t)
 result = {};
 
 for muscle_activity_belief = l2.getall(trace, t, 'belief', {predicate('emg', {NaN})})
     belief = muscle_activity_belief.arg{1}.arg{1};
     for muscle_activity_desire = l2.getall(trace, t, 'desire', {predicate('emg', {NaN})})
         desire = muscle_activity_desire.arg{1}.arg{1};
+        assessment = 0;
         
-        result = {result{:} {t+1, 'assessment', {predicate('emg', belief)}}}
+        if belief <= desire
+            assessment = 'undesirable'
+        else
+            assessment = 'desirable'
+        end
+        
+        result = {result{:} {t+1, 'assessment', assessment}}
     end
 end
 end
 
-%SDR1
+%% Support Model
+%SDR1 From Power Desire -> Muscle Temperature Desire
+function result = sdr1(trace, params, t)
+result = {};
 
-%SDR2
+for mtemp_assessment = l2.getall(trace, t, 'assessment', {predicate('mtemp', {NaN})})
+    mtemp = mtemp_assessment.arg{1}.arg{1};
+    for power_desire = l2.getall(trace, t, 'desire', {predicate('power', {NaN})})
+        desire = power_desire.arg{1}.arg{1};
+        %CHANGE IF STATEMENT TO ''IF ASSESSMENT = UNDESIRABLE''
+        if mtemp == 'low'
+            result = {result{:} {t+1, 'desire', {predicate('mtemp', 'high')}}}
+        else
+            ;
+        end
+    end
+end
+end
 
-%SDR3
+%SDR2 From Muscle Temperature Desire -> Warmup Advice Desire
+function result = sdr2(trace, params, t)
+result = {};
 
-%SDR4
+for mtemp_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {NaN})})
+    temp = mtemp_desire.arg{1}.arg{1};
+    if temp == 'high'
+        result = {result{:} {t+1, 'desire', {predicate('warmup', true)}}}
+    else
+        result = {result{:} {t+1, 'desire', {predicate('warmup', false)}}}
+    end
+end
+end
 
-%SDR5
+%SDR3 From Warmup Advice Desire -> Warmup Advice Proposal
+function result = sdr3(trace, params, t)
+result = {};
 
-%SDR6
+for warmup_desire = l2.getall(trace, t, 'desire', {predicate('warmup', {NaN})})
+    warmup = warmup_desire.arg{1}.arg{1};
+    if warmup == true
+        result = {result{:} {t+1, 'propose', {predicate('warmup', true)}}}
+    else
+        result = {result{:} {t+1, 'propose', {predicate('warmup', false)}}}
+    end
+end
+end
 
-%SDR7
+%SDR4 From Power Desire -> Force Desire
+function result = sdr4(trace, params, t)
+result = {};
+for power_desire = l2.getall(trace, t, 'desire', {predicate('power', {NaN})})
+    desire = power_desire.arg{1}.arg{1}
+    velocity = (params.g * t)/2;
+    desired_force = desire / velocity;
+    result = {result{:} {t+1, 'desire', {predicate('force', desired_force)}}}
+end
+end
+
+%SDR5 From Force Desire -> Work Desire
+function result = sdr5(trace, params, t)
+result = {}:
+for force_desire = l2.getall(trace, t, 'desire', {predicate('force', {NaN})})
+    desire = force_desire.arg{1}.arg{1};
+    for jump_height = l2.getall(trace, t, 'jump_height', {NaN})
+        height = jump_height.arg{1};
+        desired_work = desire * height
+        
+        result = {result{:} {t+1, 'desire', {predicate('work', desired_work)}}}
+    end
+end
+end
+
+%SDR6 From Work Desire -> Distance Desire
+function result = sdr6(trace, params, t)
+result = {};
+for work_desire = l2.getall(trace, t, 'desire', {predicate('work', {NaN})})
+    work = work_desire.arg{1}.arg{1};
+    for force_desire = l2.getall(trace, t, ' desire', {predicate('force', {NaN})})
+        force = force_desire.arg{1}.arg{1};
+        desired_distance = work / force
+        result = {result{:} {t+1, 'desire', {predicate('jump_height', desired_distance)}}}
+    end
+end
+end
+
+%SDR7 From Power Desire -> Emg Desire
 
 %SDR8
 
