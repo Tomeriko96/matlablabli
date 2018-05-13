@@ -467,3 +467,7 @@ for aud_desire = l2.getall(trace,t,'desire', {predicate('aud', {NaN})})
     end
 end
 end
+%% Parameter Adaptation Model
+function result = padr1(trace, params, t)
+result = {};
+end
