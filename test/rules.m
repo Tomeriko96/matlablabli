@@ -259,7 +259,7 @@ for muscle_temperature_belief = l2.getall(trace, t, 'belief', {predicate('mtemp'
         desire = muscle_temperature_desire.arg{1}.arg{1};
         assessment = 0;
         
-        if belief ~ desire
+        if belief ~ desire;
             assessment = {'undesirable'};
         else
             assessment = {'desirable'};
