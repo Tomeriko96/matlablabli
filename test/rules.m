@@ -477,7 +477,7 @@ for observed_heart_rate = l2.getall(trace,t,'observation', {predicate('heart_rat
     for belief_heart_rate = l2.getall(trace,t,'observation', {predicate('heart_rate', {NaN})})
         belief = belief_heart_rate.arg{1}.arg{1};
         deviation = observed - belief;
-        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('heart_rate', deviation)})}}}
+        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('heart_rate', deviation)})}}};
     end
 end   
 end
@@ -490,7 +490,7 @@ for observed_emg = l2.getall(trace,t,'observation', {predicate('emg', {NaN})})
     for belief_emg = l2.getall(trace,t,'observation', {predicate('emg', {NaN})})
         belief = belief_emg.arg{1}.arg{1};
         deviation = observed - belief;
-        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('emg', deviation)})}}}
+        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('emg', deviation)})}}};
     end
 end   
 end
@@ -503,7 +503,7 @@ for observed_acceleration = l2.getall(trace,t,'observation', {predicate('acceler
     for belief_acceleration = l2.getall(trace,t,'observation', {predicate('acceleration', {NaN})})
         belief = belief_acceleration.arg{1}.arg{1};
         deviation = observed - belief;
-        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('acceleration', deviation)})}}}
+        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('acceleration', deviation)})}}};
     end
 end   
 end
@@ -516,7 +516,7 @@ for observed_jump_height = l2.getall(trace,t,'observation', {predicate('jump_hei
     for belief_jump_height = l2.getall(trace,t,'observation', {predicate('jump_height', {NaN})})
         belief = belief_jump_height.arg{1}.arg{1};
         deviation = observed - belief;
-        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('jump_height', deviation)})}}}
+        result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('jump_height', deviation)})}}};
     end
 end   
 end
@@ -527,13 +527,13 @@ result = {};
 for pred1_HR = l2.getall(trace,t,'prediction1', {predicate('heart_rate', {NaN})})
     HR1 = pred1_HR.arg{1}.arg{1};
     for pred2_HR = l2.getall(trace,t,'prediction2', {predicate('heart_rate', {NaN})})
-    HR2 = pred2_HR.arg{1}.arg{1}
+    HR2 = pred2_HR.arg{1}.arg{1};
     weight1 = 0.6;
     weight2 = 0.7;
     change_x = (HR2 * weight2) - (HR1 * weight1);
     change_p = HR2 - HR1;
     sensitivity = change_x / change_p;
-    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('heart_rate', sensitivity)})}}}
+    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('heart_rate', sensitivity)})}}};
     end
 end
 end
@@ -544,13 +544,13 @@ result = {};
 for pred1_EMG = l2.getall(trace,t,'prediction1', {predicate('emg', {NaN})})
     EMG1 = pred1_EMG.arg{1}.arg{1};
     for pred2_EMG = l2.getall(trace,t,'prediction2', {predicate('emg', {NaN})})
-    EMG2 = pred2_EMG.arg{1}.arg{1}
+    EMG2 = pred2_EMG.arg{1}.arg{1};
     weight1 = 0.8;
     weight2 = 0.9;
     change_x = (EMG2 * weight2) - (EMG1 * weight1);
     change_p = EMG2 - EMG1;
     sensitivity = change_x / change_p;
-    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('emg', sensitivity)})}}}
+    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('emg', sensitivity)})}}};
     end
 end
 end
@@ -561,13 +561,13 @@ result = {};
 for pred1_acceleration = l2.getall(trace,t,'prediction1', {predicate('acceleration', {NaN})})
     acceleration1 = pred1_acceleration.arg{1}.arg{1};
     for pred2_acceleration = l2.getall(trace,t,'prediction2', {predicate('acceleration', {NaN})})
-    acceleration2 = pred2_acceleration.arg{1}.arg{1}
+    acceleration2 = pred2_acceleration.arg{1}.arg{1};
     weight1 = 0.6;
     weight2 = 0.7;
     change_x = (acceleration2 * weight2) - (acceleration1 * weight1);
     change_p = acceleration2 - acceleration1;
     sensitivity = change_x / change_p;
-    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('acceleration', sensitivity)})}}}
+    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('acceleration', sensitivity)})}}};
     end
 end
 end
@@ -578,13 +578,14 @@ result = {};
 for pred1_jump_height = l2.getall(trace,t,'prediction1', {predicate('jump_height', {NaN})})
     jump_height1 = pred1_jump_height.arg{1}.arg{1};
     for pred2_jump_height = l2.getall(trace,t,'prediction2', {predicate('jump_height', {NaN})})
-    jump_height2 = pred2_jump_height.arg{1}.arg{1}
+    jump_height2 = pred2_jump_height.arg{1}.arg{1};
     weight1 = 0.6;
     weight2 = 0.7;
     change_x = (jump_height2 * weight2) - (jump_height1 * weight1);
     change_p = jump_height2 - jump_height1;
     sensitivity = change_x / change_p;
-    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}}
+    result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}};
     end
 end
 end
+%% plot functions
