@@ -582,7 +582,7 @@ for pred1_jump_height = l2.getall(trace,t,'prediction1', {predicate('jump_height
     weight1 = 0.6;
     weight2 = 0.7;
     change_x = (jump_height2 * weight2) - (jump_height1 * weight1);
-    change_p = jump_height2 - jump_height1;
+    change_p = abs(params.v1_jump_height - params.v2_jump_height)
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}};
     end
