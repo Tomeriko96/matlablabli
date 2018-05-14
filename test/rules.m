@@ -524,68 +524,49 @@ end
 %PADR5 Prediction1 Heart Rate
 function result = padr5(trace,params,t)
 result = {};
-for pred1_HR = l2.getall(trace,t,'prediction1', {predicate('heart_rate', {NaN})})
-    HR1 = pred1_HR.arg{1}.arg{1};
-    for pred2_HR = l2.getall(trace,t,'prediction2', {predicate('heart_rate', {NaN})})
-    HR2 = pred2_HR.arg{1}.arg{1};
+
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = (HR2 * weight2) - (HR1 * weight1);
+    change_x = abs(params.v1_heart_rate * weight1) - (params.v2_heart_rate * weight2);
     change_p = abs(params.v1_heart_rate - params.v2_heart_rate);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('heart_rate', sensitivity)})}}};
-    end
-end
 end
 
 %PADR6 Prediction1 EMG
 function result = padr6(trace,params,t)
 result = {};
-for pred1_EMG = l2.getall(trace,t,'prediction1', {predicate('emg', {NaN})})
-    EMG1 = pred1_EMG.arg{1}.arg{1};
-    for pred2_EMG = l2.getall(trace,t,'prediction2', {predicate('emg', {NaN})})
-    EMG2 = pred2_EMG.arg{1}.arg{1};
+
     weight1 = 0.8;
     weight2 = 0.9;
-    change_x = (EMG2 * weight2) - (EMG1 * weight1);
+    change_x = abs(params.v1_emg * weight1) - (params.v2_emg * weight2);
     change_p = abs(params.v1_emg - params.v2_emg);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('emg', sensitivity)})}}};
-    end
-end
 end
 
 %PADR7 Prediction1 Acceleration
 function result = padr7(trace,params,t)
 result = {};
-for pred1_acceleration = l2.getall(trace,t,'prediction1', {predicate('acceleration', {NaN})})
-    acceleration1 = pred1_acceleration.arg{1}.arg{1};
-    for pred2_acceleration = l2.getall(trace,t,'prediction2', {predicate('acceleration', {NaN})})
-    acceleration2 = pred2_acceleration.arg{1}.arg{1};
+
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = (acceleration2 * weight2) - (acceleration1 * weight1);
+    change_x = abs(params.v1_acceleration * weight1) - (params.v2_acceleration * weight2);
     change_p = abs(params.v1_acceleration - params.v2_acceleration);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('acceleration', sensitivity)})}}};
-    end
-end
 end
 
 %PADR8 Prediction1 Jump Height
 function result = padr8(trace,params,t)
 result = {};
-for pred1_jump_height = l2.getall(trace,t,'prediction1', {predicate('jump_height', {NaN})})
-    jump_height1 = pred1_jump_height.arg{1}.arg{1};
-    for pred2_jump_height = l2.getall(trace,t,'prediction2', {predicate('jump_height', {NaN})})
-    jump_height2 = pred2_jump_height.arg{1}.arg{1};
+
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = (jump_height2 * weight2) - (jump_height1 * weight1);
+    change_x = abs(params.v1_jump_height * weight1) - (params.v2_jump_height * weight2);
     change_p = abs(params.v1_jump_height - params.v2_jump_height);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}};
-    end
 end
-end
+
 %% plot functions
