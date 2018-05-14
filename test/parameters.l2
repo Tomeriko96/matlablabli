@@ -7,10 +7,10 @@ low_jump_height;10
 emg;400
 v1_heart_rate;100
 v2_heart_rate;80
-v1_jump_height;100
-v2_jump_height;80
-v1_acceleration;100
-v2_acceleration;80
-v1_emg;100
-v2_emg;80
+v1_jump_height;70
+v2_jump_height;50
+v1_acceleration;18
+v2_acceleration;12
+v1_emg;350
+v2_emg;275
 )
