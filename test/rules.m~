@@ -581,7 +581,7 @@ for deviation_HR = l2.getall(trace,t, 'belief', {predicate('deviation', {predica
             weight1 = 0.6;
             weight2 = 0.7;
             change_x = abs(params.v1_heart_rate * weight1) - (params.v2_heart_rate * weight2);
-            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity;
+            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity
             result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('heart_rate', params.v2_heart_rate + change_p)})}}};
         end
     end
@@ -600,7 +600,7 @@ for deviation_EMG = l2.getall(trace,t, 'belief', {predicate('deviation', {predic
             weight1 = 0.8;
             weight2 = 0.9;
             change_x = abs(params.v1_emg * weight1) - (params.v2_emg * weight2);
-            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity;
+            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity
             result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('emg', params.v2_emg + change_p)})}}};
         end
     end
