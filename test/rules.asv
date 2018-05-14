@@ -527,7 +527,7 @@ result = {};
 
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = abs(params.v2_heart_rate * weight2) - (params.v2_heart_rate * weight2);
+    change_x = abs(params.v1_heart_rate * weight1) - (params.v2_heart_rate * weight2);
     change_p = abs(params.v1_heart_rate - params.v2_heart_rate);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('heart_rate', sensitivity)})}}};
@@ -568,5 +568,9 @@ result = {};
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}};
 end
+
+%PADR9 Belief Adapatation Option
+function result = padr9(trace,params,t)
+resul
 
 %% plot functions

@@ -12,6 +12,7 @@ emg;REAL
 ems;BOOLEAN
 aud;BOOLEAN
 warmup;BOOLEAN
+adaptation_speed;REAL
 
 deviation;      {SENSOR}
 observation;    {SENSOR}
