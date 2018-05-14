@@ -2,7 +2,7 @@ LEVEL;{low, normal, high, supramaximal}
 TIME;{short, long}
 
 SENSOR;         {<heart_rate>, <emg>, <acceleration>, <jump_height>, <power>}
-INFO_ELEM;      {<BOS>, <adaptation_speed>, <mtemp>, <heart_rate>, <power>, <emg>, <work>, <jump_height>, <force>, <ems>, <aud>, <warmup>, <deviation>, <sensitivity>, <prediction1>, <prediction2>}
+INFO_ELEM;      {<BOS>, <adaptation_speed>, <adaptation_option>, <mtemp>, <heart_rate>, <power>, <emg>, <work>, <jump_height>, <force>, <ems>, <aud>, <warmup>, <deviation>, <sensitivity>, <prediction1>, <prediction2>}
 STATE;          {desirable, undesirable}
 
 ACTION;         {<ems>, <aud>, <warmup>}

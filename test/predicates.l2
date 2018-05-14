@@ -14,6 +14,7 @@ aud;BOOLEAN
 warmup;BOOLEAN
 adaptation_speed;REAL
 
+adaptation_option; {SENSOR}
 deviation;      {SENSOR}
 observation;    {SENSOR}
 belief;         {INFO_ELEM}

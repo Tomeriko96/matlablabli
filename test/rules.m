@@ -495,7 +495,7 @@ for observed_emg = l2.getall(trace,t,'observation', {predicate('emg', {NaN})})
 end   
 end
 
-%PADR3 Deviation Belief EMG
+%PADR3 Deviation Belief Acceleration
 function result = padr3(trace, params, t)
 result = {};
 for observed_acceleration = l2.getall(trace,t,'observation', {predicate('acceleration', {NaN})})
@@ -508,7 +508,7 @@ for observed_acceleration = l2.getall(trace,t,'observation', {predicate('acceler
 end   
 end
 
-%PADR4 Deviation Belief EMG
+%PADR4 Deviation Belief Jump Height
 function result = padr4(trace, params, t)
 result = {};
 for observed_jump_height = l2.getall(trace,t,'observation', {predicate('jump_height', {NaN})})
@@ -569,6 +569,82 @@ result = {};
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}};
 end
 
+%PADR9 Belief Adapatation Option Heart Rate
+function result = padr9(trace,params,t)
+result = {};
+for deviation_HR = l2.getall(trace,t, 'belief', {predicate('deviation', {predicate('heart_rate', {NaN})})});
+    deviation = deviation_HR.arg{1}.arg{1}.arg{1};
+    for adaptation_belief = l2.getall(trace,t, 'belief', {predicate('adaptation_speed', {NaN})});
+        adaptation_speed = adaptation_belief.arg{1}.arg{1};
+        for sensitivity_HR = l2.getall(trace, t, 'belief', {predicate('sensitivity', {predicate('heart_rate', {NaN})})});
+            sensitivity = sensitivity_HR.arg{1}.arg{1}.arg{1};
+            weight1 = 0.6;
+            weight2 = 0.7;
+            change_x = abs(params.v1_heart_rate * weight1) - (params.v2_heart_rate * weight2);
+            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity
+            result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('heart_rate', params.v2_heart_rate + change_p)})}}};
+        end
+    end
+end
+end
+
+%PADR10 Belief Adapatation Option EMG
+function result = padr10(trace,params,t)
+result = {};
+for deviation_EMG = l2.getall(trace,t, 'belief', {predicate('deviation', {predicate('emg', {NaN})})});
+    deviation = deviation_EMG.arg{1}.arg{1}.arg{1};
+    for adaptation_belief = l2.getall(trace,t, 'belief', {predicate('adaptation_speed', {NaN})});
+        adaptation_speed = adaptation_belief.arg{1}.arg{1};
+        for sensitivity_EMG = l2.getall(trace, t, 'belief', {predicate('sensitivity', {predicate('emg', {NaN})})});
+            sensitivity = sensitivity_EMG.arg{1}.arg{1}.arg{1};
+            weight1 = 0.8;
+            weight2 = 0.9;
+            change_x = abs(params.v1_emg * weight1) - (params.v2_emg * weight2);
+            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity
+            result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('emg', params.v2_emg + change_p)})}}};
+        end
+    end
+end
+end
+
+%PADR11 Belief Adapatation Option Acceleration
+function result = padr11(trace,params,t)
+result = {};
+for deviation_acceleration = l2.getall(trace,t, 'belief', {predicate('deviation', {predicate('acceleration', {NaN})})});
+    deviation = deviation_acceleration.arg{1}.arg{1}.arg{1};
+    for adaptation_belief = l2.getall(trace,t, 'belief', {predicate('adaptation_speed', {NaN})});
+        adaptation_speed = adaptation_belief.arg{1}.arg{1};
+        for sensitivity_acceleration = l2.getall(trace, t, 'belief', {predicate('sensitivity', {predicate('acceleration', {NaN})})});
+            sensitivity = sensitivity_acceleration.arg{1}.arg{1}.arg{1};
+            weight1 = 0.6;
+            weight2 = 0.7;
+            change_x = abs(params.v1_acceleration * weight1) - (params.v2_acceleration * weight2);
+            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity
+            result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('acceleration', params.v2_acceleration + change_p)})}}};
+        end
+    end
+end
+end
+
+
+%PADR12 Belief Adapatation Option Jump Height
+function result = padr12(trace,params,t)
+result = {};
+for deviation_jump_height = l2.getall(trace,t, 'belief', {predicate('deviation', {predicate('jump_height', {NaN})})});
+    deviation = deviation_jump_height.arg{1}.arg{1}.arg{1};
+    for adaptation_belief = l2.getall(trace,t, 'belief', {predicate('adaptation_speed', {NaN})});
+        adaptation_speed = adaptation_belief.arg{1}.arg{1};
+        for sensitivity_jump_height = l2.getall(trace, t, 'belief', {predicate('sensitivity', {predicate('jump_height', {NaN})})});
+            sensitivity = sensitivity_jump_height.arg{1}.arg{1}.arg{1};
+            weight1 = 0.6;
+            weight2 = 0.7;
+            change_x = abs(params.v1_jump_height * weight1) - (params.v2_jump_height * weight2);
+            change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity
+            result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('jump_height', params.v2_jump_height + change_p)})}}};
+        end
+    end
+end
+end
 
 
 %% plot functions
