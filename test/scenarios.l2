@@ -1,4 +1,4 @@
-domain (
+default (
 BOS{normal};[1]
 acceleration{10};[1:Inf]
 heart_rate{100};[1:4]
@@ -6,11 +6,13 @@ heart_rate{150};[5:7]
 heart_rate{60};[8:Inf]
 jump_height{60};[1:Inf]
 emg{50};[1:Inf]
-
-)
-
-analysis (
-    observation{heart_rate{80}};        [1:Inf];    
+ desire{ems{false}};[1:Inf];
+    assume{ems{false}};[1:Inf];
+    desire{aud{false}};[1:Inf];
+    assume{aud{false}};[1:Inf];
+    desire{warmup{false}};[1:Inf];
+    assume{warmup{false}};[1:Inf];
+ observation{heart_rate{80}};        [1:Inf];    
     desire{mtemp{normal}};        [1:Inf]; 
     desire{mtemp{low}};[1:Inf];
     desire{jump_height{60}};[1:Inf];
@@ -19,11 +21,10 @@ analysis (
     belief{adaptation_speed{1}};[1:Inf];
 
 )
+
+analysis (
+   
+)
 support (
-    desire{ems{false}};[1:Inf];
-    assume{ems{false}};[1:Inf];
-    desire{aud{false}};[1:Inf];
-    assume{aud{false}};[1:Inf];
-    desire{warmup{false}};[1:Inf];
-    assume{warmup{false}};[1:Inf];
+   
 )
