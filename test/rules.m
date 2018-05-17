@@ -8,6 +8,13 @@ end
 %ADD RULES BELOW
 
 %% Domain model
+function result = ddr0( trace, params, t)
+    result = {};
+    a=arduino();
+    value = readVoltage(a, 'A0');
+    result = { result{:} {t+1, 'emg', {value}} };
+end
+
 function result = ddr1( trace, params, t)
     % from heart rate to blood-oxygen saturation
     result = {};
