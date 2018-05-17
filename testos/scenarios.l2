@@ -1,1 +1,3 @@
-distancesensor{rtinput_distancesensor};  [1:Inf]
+default(
+emg{0};[1]
+)

@@ -1,4 +1,4 @@
-function result = distancesensor(controller)
-    pin = 'D10';
-    result = predicate('distancesensor', readVoltage(controller, pin));
+function result = emg(controller)
+    pin = 'A0';
+    result = predicate('emg', readVoltage(controller, pin));
 end

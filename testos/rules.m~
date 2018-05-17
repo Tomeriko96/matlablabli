@@ -7,10 +7,11 @@ function [ fncs ] = rules()
 end
 
 %ADD RULES BELOW
-
-function result = ddr1( trace, params, t)
+a=ar
+function result = ddr1(model, trace, params, t)
     result = {};
-    a=arduino();
-    value = readVoltage(a, 'A0');
-    result = { result{:} {t+1, 'emg', {value}} };
+    
+    value = readVoltage(a, 'A0')
+    
+    result = {t+1, 'emg', value};
 end
