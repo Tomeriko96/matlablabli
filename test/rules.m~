@@ -11,7 +11,7 @@ end
 function result = ddr0( trace, params, t)
    result = {};
    a=arduino();
-   value = readVoltage(a, 'A0') * 10;
+   value = readVoltage(a, 'A0');
    result = { result{:} {t+1, 'emg', {value}} };
 end
 
@@ -266,7 +266,7 @@ function result = adr12(trace, params, t)
             desire = muscle_temperature_desire.arg{1}.arg{1};
             assessment = 0;
 
-            if belief ~ desire
+            if belief ~ desire;
                 assessment = {'undesirable'};
             else
                 assessment = {'desirable'};
@@ -360,8 +360,9 @@ function result = sdr3(trace, params, t)
         warmup = warmup_desire.arg{1}.arg{1};
         if warmup == true
             result = {result{:} {t+1, 'propose', {predicate('warmup', true)}}};
-            a=arduino();
-            playTone(a,'D3',10,30);
+            %a=arduino();
+
+            %playTone(a,'D3',10,30);
         else
             result = {result{:} {t+1, 'propose', {predicate('warmup', false)}}};
         end
