@@ -283,7 +283,7 @@ function result = adr12(trace, params, t)
 
     for jump_height_belief = l2.getall(trace, t, 'belief', {predicate('jump_height', {NaN})})
         belief = jump_height_belief.arg{1}.arg{1};
-        for jump_height_desire = l2.getall(trace, t, 'desire', {predicate('jump_height', {60})})
+        for jump_height_desire = l2.getall(trace, t, 'desire', {predicate('jump_height', {NaN})})
             desire = jump_height_desire.arg{1}.arg{1};
 
             assessment = 0;

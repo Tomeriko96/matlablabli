@@ -8,6 +8,5 @@ heart_rate{110};[9:Inf]
 jump_height{60};[1:Inf]
 desire{mtemp{normal}};[1:Inf]; 
 desire{mtemp{low}};[1:Inf];
-desire{jump_height{60}};[1:Inf];
 desire{power{high}};[1:Inf];
 belief{adaptation_speed{1}};[1:Inf];
