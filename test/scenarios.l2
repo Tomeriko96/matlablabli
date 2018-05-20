@@ -1,12 +1,11 @@
 default (
 BOS{normal};[1]
 acceleration{10};[1:Inf]
-heart_rate{100};[1:4]
-heart_rate{150};[5:7]
-heart_rate{60};[8:Inf]
+heart_rate{80};[1:4]
+heart_rate{90};[5:6]
+heart_rate{100};[7:8]
+heart_rate{110};[9:Inf]
 jump_height{60};[1:Inf]
-emg{0};[1:Inf]
-observation{heart_rate{80}};[1:Inf];    
 desire{mtemp{normal}};[1:Inf]; 
 desire{mtemp{low}};[1:Inf];
 desire{jump_height{60}};[1:Inf];

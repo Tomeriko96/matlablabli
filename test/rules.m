@@ -493,7 +493,7 @@ for observed_heart_rate = l2.getall(trace,t,'observation', {predicate('heart_rat
     observed = observed_heart_rate.arg{1}.arg{1};
     for belief_heart_rate = l2.getall(trace,t,'observation', {predicate('heart_rate', {NaN})})
         belief = belief_heart_rate.arg{1}.arg{1};
-        deviation = observed - belief;
+        deviation = abs(observed - belief);
         result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('heart_rate', deviation)})}}};
     end
 end   
@@ -506,7 +506,7 @@ for observed_emg = l2.getall(trace,t,'observation', {predicate('emg', {NaN})})
     observed = observed_emg.arg{1}.arg{1};
     for belief_emg = l2.getall(trace,t,'observation', {predicate('emg', {NaN})})
         belief = belief_emg.arg{1}.arg{1};
-        deviation = observed - belief;
+        deviation = abs(observed - belief);
         result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('emg', deviation)})}}};
     end
 end   
@@ -519,7 +519,7 @@ for observed_acceleration = l2.getall(trace,t,'observation', {predicate('acceler
     observed = observed_acceleration.arg{1}.arg{1};
     for belief_acceleration = l2.getall(trace,t,'observation', {predicate('acceleration', {NaN})})
         belief = belief_acceleration.arg{1}.arg{1};
-        deviation = observed - belief;
+        deviation = abs(observed - belief);
         result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('acceleration', deviation)})}}};
     end
 end   
@@ -532,7 +532,7 @@ for observed_jump_height = l2.getall(trace,t,'observation', {predicate('jump_hei
     observed = observed_jump_height.arg{1}.arg{1};
     for belief_jump_height = l2.getall(trace,t,'observation', {predicate('jump_height', {NaN})})
         belief = belief_jump_height.arg{1}.arg{1};
-        deviation = observed - belief;
+        deviation = abs(observed - belief);
         result = {result{:} {t+1, 'belief', {predicate('deviation', {predicate('jump_height', deviation)})}}};
     end
 end   
@@ -544,7 +544,7 @@ result = {};
 
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = abs(params.v1_heart_rate * weight1) - (params.v2_heart_rate * weight2);
+    change_x = abs(abs(params.v1_heart_rate * weight1) - abs(params.v2_heart_rate * weight2));
     change_p = abs(params.v1_heart_rate - params.v2_heart_rate);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('heart_rate', sensitivity)})}}};
@@ -556,7 +556,7 @@ result = {};
 
     weight1 = 0.8;
     weight2 = 0.9;
-    change_x = abs(params.v1_emg * weight1) - (params.v2_emg * weight2);
+    change_x = abs(abs(params.v1_emg * weight1) - abs(params.v2_emg * weight2));
     change_p = abs(params.v1_emg - params.v2_emg);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('emg', sensitivity)})}}};
@@ -568,7 +568,7 @@ result = {};
 
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = abs(params.v1_acceleration * weight1) - (params.v2_acceleration * weight2);
+    change_x = abs(abs(params.v1_acceleration * weight1) - (params.v2_acceleration * weight2));
     change_p = abs(params.v1_acceleration - params.v2_acceleration);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('acceleration', sensitivity)})}}};
@@ -580,7 +580,7 @@ result = {};
 
     weight1 = 0.6;
     weight2 = 0.7;
-    change_x = abs(params.v1_jump_height * weight1) - (params.v2_jump_height * weight2);
+    change_x = abs(abs(params.v1_jump_height * weight1) - abs(params.v2_jump_height * weight2));
     change_p = abs(params.v1_jump_height - params.v2_jump_height);
     sensitivity = change_x / change_p;
     result = {result{:} {t+1, 'belief', {predicate('sensitivity', {predicate('jump_height', sensitivity)})}}};
@@ -597,7 +597,7 @@ for deviation_HR = l2.getall(trace,t, 'belief', {predicate('deviation', {predica
             sensitivity = sensitivity_HR.arg{1}.arg{1}.arg{1};
             weight1 = 0.6;
             weight2 = 0.7;
-            change_x = abs(params.v1_heart_rate * weight1) - (params.v2_heart_rate * weight2);
+            change_x = abs(abs(params.v1_heart_rate * weight1) - abs(params.v2_heart_rate * weight2));
             change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity;
             result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('heart_rate', params.v2_heart_rate + change_p)})}}};
         end
@@ -616,7 +616,7 @@ for deviation_EMG = l2.getall(trace,t, 'belief', {predicate('deviation', {predic
             sensitivity = sensitivity_EMG.arg{1}.arg{1}.arg{1};
             weight1 = 0.8;
             weight2 = 0.9;
-            change_x = abs(params.v1_emg * weight1) - (params.v2_emg * weight2);
+            change_x = abs(abs(params.v1_emg * weight1) - abs(params.v2_emg * weight2));
             change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity;
             result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('emg', params.v2_emg + change_p)})}}};
         end
@@ -635,7 +635,7 @@ for deviation_acceleration = l2.getall(trace,t, 'belief', {predicate('deviation'
             sensitivity = sensitivity_acceleration.arg{1}.arg{1}.arg{1};
             weight1 = 0.6;
             weight2 = 0.7;
-            change_x = abs(params.v1_acceleration * weight1) - (params.v2_acceleration * weight2);
+            change_x = abs(abs(params.v1_acceleration * weight1) - abs(params.v2_acceleration * weight2));
             change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity;
             result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('acceleration', params.v2_acceleration + change_p)})}}};
         end
@@ -655,7 +655,7 @@ for deviation_jump_height = l2.getall(trace,t, 'belief', {predicate('deviation',
             sensitivity = sensitivity_jump_height.arg{1}.arg{1}.arg{1};
             weight1 = 0.6;
             weight2 = 0.7;
-            change_x = abs(params.v1_jump_height * weight1) - (params.v2_jump_height * weight2);
+            change_x = abs(abs(params.v1_jump_height * weight1) - abs(params.v2_jump_height * weight2));
             change_p = adaptation_speed * change_x * (1 - weight1) / sensitivity;
             result = {result{:} {t+1, 'belief', {predicate('adaptation_option', {predicate('jump_height', params.v2_jump_height + change_p)})}}};
         end
