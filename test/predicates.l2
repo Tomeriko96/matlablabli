@@ -23,6 +23,8 @@ prediction2;    {SENSOR}
 sensitivity;    {SENSOR}
 desire;         {INFO_ELEM}
 assessment;     {STATE}
+desirable;      {INFO_ELEM}
+undesirable;    {INFO_ELEM}
 
 assume;         {ACTION}    
 assumption;     {ACTION, INFO_ELEM}

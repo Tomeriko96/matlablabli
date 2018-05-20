@@ -267,9 +267,9 @@ function result = adr12(trace, params, t)
             assessment = 0;
 
             if belief ~ desire
-                assessment = {'undesirable'};
+                assessment = predicate('undesirable', {predicate('mtemp', belief)});
             else
-                assessment = {'desirable'};
+                assessment = predicate('desirable', {predicate('mtemp', belief)});
             end
 
             result = {result{:} {t+1, 'assessment', assessment}};
@@ -289,9 +289,9 @@ function result = adr12(trace, params, t)
             assessment = 0;
 
             if belief ~ desire
-                assessment = 'undesirable';
+                assessment = predicate('undesirable', {predicate('jump_height', belief)});
             else
-                assessment = 'desirable';
+                assessment = predicate('undesirable', {predicate('jump_height', belief)});
             end
             result = {result{:} {t+1, 'assessment', assessment}};
         end
@@ -309,9 +309,9 @@ function result = adr14(trace, params, t)
             assessment = 0;
 
             if belief ~ desire
-                assessment = 'undesirable';
+                assessment = predicate('undesirable', {predicate('emg', belief)});
             else
-                assessment = 'desirable';
+                assessment = predicate('undesirable', {predicate('emg', belief)});
             end
 
             result = {result{:} {t+1, 'assessment', assessment}};
@@ -324,11 +324,10 @@ end
 function result = sdr1(trace, params, t)
     result = {};
 
-    for mtemp_assessment = l2.getall(trace, t, 'assessment', {predicate('mtemp', {NaN})})
-        mtemp = mtemp_assessment.arg{1}.arg{1};
+    for mtemp_assessment = l2.getall(trace, t, 'assessment', {predicate('undesirable', {predicate('mtemp', {NaN})})})
+        mtemp = mtemp_assessment.arg{1}.arg{1}.arg{1};
         for power_desire = l2.getall(trace, t, 'desire', {predicate('power', {NaN})})
             desire = power_desire.arg{1}.arg{1};
-            %CHANGE IF STATEMENT TO ''IF ASSESSMENT = UNDESIRABLE''
             if mtemp == 'low'
                 result = {result{:} {t+1, 'desire', {predicate('mtemp', 'high')}}};
             else
