@@ -291,7 +291,7 @@ function result = adr12(trace, params, t)
             if belief ~ desire
                 assessment = predicate('undesirable', {predicate('jump_height', belief)});
             else
-                assessment = predicate('undesirable', {predicate('jump_height', belief)});
+                assessment = predicate('desirable', {predicate('jump_height', belief)});
             end
             result = {result{:} {t+1, 'assessment', assessment}};
         end
@@ -311,7 +311,7 @@ function result = adr14(trace, params, t)
             if belief ~ desire
                 assessment = predicate('undesirable', {predicate('emg', belief)});
             else
-                assessment = predicate('undesirable', {predicate('emg', belief)});
+                assessment = predicate('desirable', {predicate('emg', belief)});
             end
 
             result = {result{:} {t+1, 'assessment', assessment}};
