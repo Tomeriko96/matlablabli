@@ -343,7 +343,7 @@ function result = sdr2(trace, params, t)
 
     for mtemp_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {NaN})})
         temp = mtemp_desire.arg{1}.arg{1};
-        if (temp - 37.5) > 1.0
+        if  temp == 'low'
             result = {result{:} {t+1, 'desire', {predicate('warmup', true)}}};
         else
             result = {result{:} {t+1, 'desire', {predicate('warmup', false)}}};
