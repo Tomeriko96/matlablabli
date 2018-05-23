@@ -266,7 +266,7 @@ function result = adr12(trace, params, t)
             desire = muscle_temperature_desire.arg{1}.arg{1};
             assessment = 0;
 
-            if belief ~ desire
+            if belief ~= desire
                 assessment = predicate('undesirable', {predicate('mtemp', belief)});
             else
                 assessment = predicate('desirable', {predicate('mtemp', belief)});
@@ -288,7 +288,7 @@ function result = adr12(trace, params, t)
 
             assessment = 0;
 
-            if belief < desire
+            if belief ~= desire
                 assessment = predicate('undesirable', {predicate('jump_height', belief)});
             else
                 assessment = predicate('desirable', {predicate('jump_height', belief)});
@@ -308,7 +308,7 @@ function result = adr14(trace, params, t)
             desire = muscle_activity_desire.arg{1}.arg{1};
             assessment = 0;
 
-            if belief ~ desire
+            if belief ~= desire
                 assessment = predicate('undesirable', {predicate('emg', belief)});
             else
                 assessment = predicate('desirable', {predicate('emg', belief)});
