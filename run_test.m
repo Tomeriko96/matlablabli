@@ -10,5 +10,5 @@ out = strcat(s, X(randi(numel(X))));
 disp(out)
 
 model = l2('test');
-model.simulate(10);
+model.simulate(10, 'superman');
 model.plot();
