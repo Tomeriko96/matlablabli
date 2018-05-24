@@ -11,6 +11,6 @@ v1_jump_height;70
 v2_jump_height;50
 v1_acceleration;18
 v2_acceleration;12
-v1_emg;35
-v2_emg;15
+v1_emg;40
+v2_emg;10
 )
