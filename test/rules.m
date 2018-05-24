@@ -8,12 +8,12 @@ end
 %ADD RULES BELOW
 
 %% Domain model
-function result = ddr0( trace, params, t)
-   result = {};
-   a=arduino();
-   value = readVoltage(a, 'A0') * 10;
-   result = { result{:} {t+1, 'emg', {value}} };
-end
+%function result = ddr0( trace, params, t)
+%   result = {};
+%   a=arduino();
+%   value = readVoltage(a, 'A0') * 10;
+%   result = { result{:} {t+1, 'emg', {value}} };
+%end
 
 function result = ddr1( trace, params, t)
     % from heart rate to blood-oxygen saturation
@@ -359,8 +359,8 @@ function result = sdr3(trace, params, t)
         warmup = warmup_desire.arg{1}.arg{1};
         if warmup == true
             result = {result{:} {t+1, 'propose', {predicate('warmup', true)}}};
-            a=arduino();
-            playTone(a,'D3',10,30);
+%            a=arduino();
+%            playTone(a,'D3',10,30);
         else
             result = {result{:} {t+1, 'propose', {predicate('warmup', false)}}};
         end
@@ -442,11 +442,11 @@ function result = sdr9(trace,params,t)
         ems = ems_desire.arg{1}.arg{1};
         if ems == true
             result = {result{:} {t+1, 'propose', {predicate('ems', true)}}};
-            a=arduino();
-            s = servo(a, 'D4', 'MinPulseDuration', 700*10^-6, 'MaxPulseDuration', 2300*10^-6);
-            for angle = 0:0.2:1
-               writePosition(s, angle);
-            end
+%            a=arduino();
+%            s = servo(a, 'D4', 'MinPulseDuration', 700*10^-6, 'MaxPulseDuration', 2300*10^-6);
+%            for angle = 0:0.2:1
+%               writePosition(s, angle);
+%            end
         else
             result = {result{:} {t+1, 'propose', {predicate('ems', false)}}};
         end
@@ -476,8 +476,8 @@ for aud_desire = l2.getall(trace,t,'desire', {predicate('aud', {NaN})})
     aud = aud_desire.arg{1}.arg{1};
     if aud == true
         result = {result{:} {t+1, 'propose', {predicate('aud', true)}}};
-        a=arduino();
-        playTone(a,'D5',2400,10);
+%        a=arduino();
+%        playTone(a,'D5',2400,10);
     else
         result = {result{:} {t+1, 'propose', {predicate('aud', false)}}};
     end

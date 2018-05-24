@@ -4,7 +4,7 @@ heart_rate;100
 mass;80
 g;9.81
 low_jump_height;10
-emg;2
+emg;20
 v1_heart_rate;100
 v2_heart_rate;80
 v1_jump_height;70
