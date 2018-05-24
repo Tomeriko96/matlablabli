@@ -7,6 +7,21 @@ heart_rate{100};[7:8]
 heart_rate{110};[9:Inf]
 jump_height{60};[1:Inf]
 desire{mtemp{normal}};[1:Inf]; 
-desire{mtemp{low}};[1:Inf];
 desire{power{high}};[1:Inf];
 belief{adaptation_speed{1}};[1:Inf];
+
+superman (
+BOS{high};[1]
+acceleration{20};[1:Inf]
+heart_rate{140};[1:4]
+heart_rate{140};[5:6]
+heart_rate{140};[7:8]
+heart_rate{160};[9:Inf]
+jump_height{90};[1:Inf]
+desire{mtemp{normal}};[1:Inf]; 
+desire{power{high}};[1:Inf];
+belief{adaptation_speed{1}};[1:Inf];
+
+
+
+)
