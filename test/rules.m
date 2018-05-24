@@ -343,10 +343,10 @@ function result = sdr2(trace, params, t)
 
     for mtemp_desire = l2.getall(trace, t, 'desire', {predicate('mtemp', {NaN})})
         temp = mtemp_desire.arg{1}.arg{1};
-        if  temp == 'low'
-            result = {result{:} {t+1, 'desire', {predicate('warmup', true)}}};
-        else
+        if  temp == 'normal'
             result = {result{:} {t+1, 'desire', {predicate('warmup', false)}}};
+        else
+            result = {result{:} {t+1, 'desire', {predicate('warmup', true)}}};
         end
     end
 end
@@ -422,10 +422,10 @@ end
 %SDR8 From Emg Desire -> EMS Desire
 function result = sdr8(trace,params,t)
     result = {};
-    for emg_desire = l2.getall(trace, t, 'desire', {predicate('emg', {NaN})})
-        emg = emg_desire.arg{1}.arg{1};
+    for emg = l2.getall(trace, t, 'emg', {NaN})
+        value = emg.arg{1};
         ems = false;
-        if emg == params.emg
+        if value <= params.emg
             ems = true;
         else
             ems = false;
@@ -460,7 +460,7 @@ for emg_desire = l2.getall(trace,t,'desire', {predicate('emg', {NaN})})
     emg = emg_desire.arg{1}.arg{1};
     for jump_height_desire = l2.getall(trace,t,'desire', {predicate('jump_height', {NaN})})
         height = jump_height_desire.arg{1}.arg{1};
-        if emg == params.emg && height
+        if emg <= params.emg && height <= 80
             result = {result{:} {t+1, 'desire', {predicate('aud', true)}}};
         else
             result = {result{:} {t+1, 'desire', {predicate('aud', false)}}};
